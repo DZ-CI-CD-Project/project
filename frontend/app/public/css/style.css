@@ -1,0 +1,383 @@
+/* ===== 기본 ===== */
+body {
+  background-color: #f9fafc;
+  font-family: "Noto Sans KR", sans-serif;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  font-size: 1.1rem;
+  width: 100%;
+  max-width: none;
+}
+
+.banner {
+  text-align: center;
+  background: #1a237e;
+  color: white;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.banner h1 { margin: 0; font-size: 2rem; }
+
+/* Center title while keeping right-side actions */
+.banner .title-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 0.6fr 5.9fr; /* 오른쪽 패널을 더 넓게 */
+  gap: 1.4rem;
+  padding: 2.4rem 2rem;
+  width: 100%;
+  max-width: none; /* 가로 제한 제거 */
+  margin: 0;
+}
+
+/* ===== 패널 ===== */
+.left-panel, .right-panel {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  min-height: 600px;
+}
+
+/* ===== 달력 ===== */
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.calendar th, .calendar td {
+  border: 1px solid #ddd;
+  padding: 0.5em;
+}
+.calendar th { background-color: #f5f5f5; font-weight: bold; }
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===== 내 정보 입력폼 ===== */
+.myinfo {
+  margin-top: 2rem;
+}
+#infoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+#infoForm label {
+  font-weight: bold;
+}
+#infoForm input {
+  padding: 10px;
+  font-size: 1.05rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+#infoForm input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 4px rgba(79, 70, 229, 0.3);
+  outline: none;
+}
+.button-box {
+  display: flex;
+  gap: 12px;
+}
+.button-box button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.button-box button:hover {
+  background: #3730a3;
+}
+#infoDisplay {
+  margin-top: 15px;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* ===== 채용공고 테이블 ===== */
+.job-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.job-table th, .job-table td {
+  padding: 0.8em;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+.job-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* 검색 입력창과 셀렉트를 헤더 아래에서 자연스럽게 꽉 차게 */
+.job-table thead input[type="text"],
+.job-table thead select {
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px; /* 더 크게 */
+  padding: 10px 12px;
+  font-size: 1.05rem; /* 글씨 크게 */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* 경력/학력 드롭다운은 최소 너비 지정 */
+.job-table thead select#fCareer,
+.job-table thead select#fEdu { min-width: 160px; }
+
+/* 제목 셀에 붙는 추론 태그 */
+.tag-wrap { margin-left: 6px; }
+.tag-muted {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  color: #374151;
+  background: #eef2ff;
+  border: 1px solid #dbe1ff;
+  border-radius: 999px;
+}
+.new-post-btn {
+  background: #4f46e5;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.new-post-btn:hover {
+  background: #3730a3;
+}
+
+/* ===========================
+   크기 확대 및 비율 조정
+=========================== */
+
+/* 전체 비율 확대 */
+body {
+  zoom: 0.8; /* 전체 요소를 120% 확대 */
+}
+
+@supports not (zoom: 1) {
+  body {
+    transform: scale(1.2);
+    transform-origin: top center;
+  }
+}
+
+/* 대시보드 영역 확장 (중복 제거 - 위에서 이미 처리) */
+
+/* 좌우 패널의 여백 및 내부 패딩 확대 */
+.left-panel, .right-panel {
+  padding: 2.5rem;
+  min-height: 700px;
+}
+
+/* 달력의 셀 크기 및 폰트 확대 */
+.calendar th, .calendar td {
+  padding: 0.8em;
+  font-size: 1.1rem;
+}
+
+/* 채용공고 테이블 행간과 폰트 확대 */
+.job-table th, .job-table td {
+  padding: 1em;
+  font-size: 1.1rem;
+}
+
+/* 열 너비 가이드: 공고명 넓게 */
+.job-table th:nth-child(4),
+.job-table td:nth-child(4) {
+  width: 32%; /* 공고명(제목) 열을 더 좁게 */
+}
+
+/* 경력/학력/로고 열 폭 미세 조정 */
+.job-table th:nth-child(5),
+.job-table td:nth-child(5) { /* 경력 */
+  width: 8%;
+}
+.job-table th:nth-child(6),
+.job-table td:nth-child(6) { /* 학력 */
+  width: 8%; /* 학력 칸을 조금 더 넓게 */
+}
+.job-table th:nth-child(7),
+.job-table td:nth-child(7) { /* 로고 */
+  width: 8%;
+}
+
+/* 카드 슬라이더 영역 높이 조정 (나중 확장용 대비) */
+.job-card-section {
+  margin-top: 30px;
+  transform: scale(1.1);
+  transform-origin: top left;
+}
+
+
+/* 달력 마감일 강조 */
+.calendar td {
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.calendar td[style*="background-color"] {
+  border: 2px solid #facc15;
+  border-radius: 6px;
+  color: #b45309;
+  font-weight: 600;
+}
+
+
+.newjob-container {
+  max-width: 500px;
+  margin: 80px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.job-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.job-form input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.job-form button {
+  background: #4a48db;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.job-form button:hover {
+  background: #3836b8;
+}
+
+.job-form a {
+  text-align: center;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.job-form a:hover {
+  text-decoration: underline;
+}
+
+
+/* ==== Sidebar equal buttons ==== */
+.sidebar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+/* ==== Filters in job list ==== */
+.right-panel select {
+  padding: 10px 12px;
+  font-size: 1.05rem;
+  height: 44px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* search.html uses left-panel as main container */
+.left-panel select {
+  padding: 12px 14px;
+  font-size: 1.08rem;
+  height: 48px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 14px 10px;
+}
+
+.user-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #10b981;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  height: 36px;
+  line-height: 1;
+}
+
+.logout-btn {
+  margin-left: 8px;
+  background: #ef4444;
+  color: #fff;
+  border: 0;
+  border-radius: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  height: 36px;
+  line-height: 1;
+}
+.logout-btn:hover { background: #dc2626; }
+
+/* Make auth chips same visual size */
+.user-badge, .logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px; /* exact same width */
+  box-sizing: border-box;
+}
+/* 공통: 배너 글씨 하얗게 */
+.banner h1,
+.banner .title-center {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* 중앙정렬용: .title-center는 position 그대로 유지 */
+.banner .title-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
