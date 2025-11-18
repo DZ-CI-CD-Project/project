@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: jobs-app
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  BACKEND_URL: "http://backend:8000"
+  WORK24_API_KEY: "184d5b92-d9ef-4629-b9dc-1947635119ac"
+

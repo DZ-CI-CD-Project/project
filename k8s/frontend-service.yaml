@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: jobs-app
+  labels:
+    app: frontend
+spec:
+  type: NodePort  # 또는 LoadBalancer, Ingress 사용 가능
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+    name: http
+    nodePort: 30080  # NodePort 범위: 30000-32767
+  selector:
+    app: frontend
+

@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jobs-app-ingress
+  namespace: jobs-app
+  annotations:
+    # nginx ingress 사용 시
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # cert-manager 사용 시 SSL 인증서 자동 발급
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  # ingressClassName: nginx
+  rules:
+  - host: jobs-app.local  # 실제 도메인으로 변경
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 3000
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8000
+  # TLS 설정 (SSL 인증서 사용 시)
+  # tls:
+  # - hosts:
+  #   - jobs-app.local
+  #   secretName: jobs-app-tls

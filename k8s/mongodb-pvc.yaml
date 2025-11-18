@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+  namespace: jobs-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  # hostPath를 사용하여 로컬 스토리지 사용 (개발/테스트용)
+  # 프로덕션에서는 적절한 StorageClass를 사용하세요
+  storageClassName: manual
+
