@@ -73,6 +73,7 @@ jobs:
       - prepare-version
     env:
       IMAGE_VERSION: ${{ needs.prepare-version.outputs.image_version }}
+      HARBOR_CA_CRT: ${{ secrets.HARBOR_CA_CRT }}
     strategy:
       fail-fast: false
       matrix:
@@ -88,9 +89,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Harbor CA certificate
-        if: ${{ secrets.HARBOR_CA_CRT != '' }}
-        env:
-          HARBOR_CA_CRT: ${{ secrets.HARBOR_CA_CRT }}
+        if: ${{ env.HARBOR_CA_CRT != '' }}
         run: |
           echo "$HARBOR_CA_CRT" | base64 -d > harbor-ca.crt
           sudo mkdir -p /etc/docker/certs.d/${{ env.REGISTRY_HOST }}
