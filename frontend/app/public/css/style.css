@@ -1,6 +1,6 @@
 /* ===== 기본 ===== */
 body {
-  background-color: #f9fafc;
+  background-color: #fdf2f8;
   font-family: "Noto Sans KR", sans-serif;
   color: #222;
   margin: 0;
@@ -12,10 +12,10 @@ body {
 
 .banner {
   text-align: center;
-  background: #1a237e;
+  background: #ec4899;
   color: white;
   padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(236, 72, 153, 0.3);
   position: relative;
 }
 .banner h1 { margin: 0; font-size: 2rem; }
@@ -87,8 +87,8 @@ body {
   border-radius: 6px;
 }
 #infoForm input:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 4px rgba(79, 70, 229, 0.3);
+  border-color: #ec4899;
+  box-shadow: 0 0 4px rgba(236, 72, 153, 0.3);
   outline: none;
 }
 .button-box {
@@ -96,7 +96,7 @@ body {
   gap: 12px;
 }
 .button-box button {
-  background: #4f46e5;
+  background: #ec4899;
   color: white;
   border: none;
   border-radius: 6px;
@@ -106,7 +106,7 @@ body {
   transition: 0.2s;
 }
 .button-box button:hover {
-  background: #3730a3;
+  background: #db2777;
 }
 #infoDisplay {
   margin-top: 15px;
@@ -153,13 +153,13 @@ body {
   margin-left: 4px;
   padding: 2px 6px;
   font-size: 0.8rem;
-  color: #374151;
-  background: #eef2ff;
-  border: 1px solid #dbe1ff;
+  color: #831843;
+  background: #fce7f3;
+  border: 1px solid #f9a8d4;
   border-radius: 999px;
 }
 .new-post-btn {
-  background: #4f46e5;
+  background: #ec4899;
   color: white;
   padding: 8px 14px;
   border-radius: 25px;
@@ -167,7 +167,7 @@ body {
   font-weight: bold;
 }
 .new-post-btn:hover {
-  background: #3730a3;
+  background: #db2777;
 }
 
 /* ===========================
@@ -271,7 +271,7 @@ body {
 }
 
 .job-form button {
-  background: #4a48db;
+  background: #ec4899;
   color: white;
   padding: 10px;
   border: none;
@@ -280,7 +280,7 @@ body {
 }
 
 .job-form button:hover {
-  background: #3836b8;
+  background: #db2777;
 }
 
 .job-form a {
@@ -334,7 +334,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #10b981;
+  background: #f472b6;
   color: #fff;
   padding: 8px 14px;
   border-radius: 20px;
@@ -380,4 +380,39 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* === Floating squarey widget === */
+.floating-squarey {
+  position: fixed;
+  top: calc(72px + env(safe-area-inset-top, 0px));
+  right: 20px;
+  width: 180px;
+  height: 180px;
+  z-index: 1200;
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+.floating-squarey iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .floating-squarey {
+    width: 120px;
+    height: 120px;
+    top: calc(64px + env(safe-area-inset-top, 0px));
+  }
+}
+
+@media (max-width: 768px) {
+  .floating-squarey {
+    display: none;
+  }
 }

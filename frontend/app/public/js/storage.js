@@ -127,4 +127,13 @@ window.StorageAPI = {
   currentUser: storageCurrentUser,
 };
 
-
+// Lazy-load the floating squarey widget script once per page
+(function loadSquareyWidget() {
+  if (window.__squareyWidgetLoaded) return;
+  window.__squareyWidgetLoaded = true;
+  if (!document.head) return;
+  const script = document.createElement('script');
+  script.src = '/js/squarey-widget.js';
+  script.defer = true;
+  document.head.appendChild(script);
+})();

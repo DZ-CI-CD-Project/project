@@ -16,7 +16,7 @@ env:
 jobs:
   sonarqube:
     name: SonarQube Analysis
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,8 +28,8 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.projectKey=DZ-CI-CD-Project
-            -Dsonar.projectName=DZ-CI-CD-Project
+            -Dsonar.projectKey=${{ github.event.repository.name }}
+            -Dsonar.projectName=${{ github.event.repository.name }}
             -Dsonar.sources=backend,frontend
             -Dsonar.exclusions=**/node_modules/**,**/.next/**,frontend/app/public/**,**/build/**,**/dist/**,**/coverage/**
 
@@ -41,7 +41,7 @@ jobs:
 
   prepare-version:
     name: Determine Image Version
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: ubuntu-latest
     needs:
       - sonarqube
     outputs:
@@ -68,7 +68,7 @@ jobs:
 
   build-and-push:
     name: Build, Scan, and Push Images
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: ubuntu-latest
     needs:
       - prepare-version
     env:
@@ -124,7 +124,7 @@ jobs:
           format: table
           severity: 'CRITICAL,HIGH'
           vuln-type: 'os,library'
-          exit-code: '0'
+          exit-code: '1'
 
       - name: Push image
         run: docker push ${{ steps.image.outputs.image_ref }}
@@ -136,7 +136,7 @@ jobs:
 
   tag-release:
     name: Tag Release
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: ubuntu-latest
     needs:
       - build-and-push
       - prepare-version

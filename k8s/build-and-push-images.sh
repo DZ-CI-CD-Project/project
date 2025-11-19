@@ -5,7 +5,7 @@
 set -e
 
 HARBOR_HOST="192.168.0.240"
-PROJECT_NAME="mywork"  # Harbor 프로젝트 이름
+PROJECT_NAME="mywork-diff"  # Harbor 프로젝트 이름
 
 BACKEND_IMAGE="${HARBOR_HOST}/${PROJECT_NAME}/backend:latest"
 FRONTEND_IMAGE="${HARBOR_HOST}/${PROJECT_NAME}/frontend:latest"
