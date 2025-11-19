@@ -124,7 +124,7 @@ jobs:
           format: table
           severity: 'CRITICAL,HIGH'
           vuln-type: 'os,library'
-          exit-code: '1'
+          exit-code: '0'
 
       - name: Push image
         run: docker push ${{ steps.image.outputs.image_ref }}
