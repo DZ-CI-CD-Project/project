@@ -16,8 +16,7 @@ env:
 jobs:
   sonarqube:
     name: SonarQube Analysis
-    needs:
-      - prepare-version
+    needs: [prepare-version]
     runs-on: [self-hosted, Linux, X64]
     env:
       SONAR_PROJECT_VERSION: ${{ needs.prepare-version.outputs.image_version || github.run_number }}
@@ -72,8 +71,7 @@ jobs:
   build-and-push:
     name: Build, Scan, and Push Images
     runs-on: [self-hosted, Linux, X64]
-    needs:
-      - prepare-version
+    needs: [prepare-version, sonarqube]
     env:
       IMAGE_VERSION: ${{ needs.prepare-version.outputs.image_version }}
       HARBOR_CA_CRT: ${{ secrets.HARBOR_CA_CRT }}
@@ -127,7 +125,7 @@ jobs:
           format: table
           severity: 'CRITICAL,HIGH'
           vuln-type: 'os,library'
-          exit-code: '0'
+          exit-code: '1'
 
       - name: Push image
         run: docker push ${{ steps.image.outputs.image_ref }}
