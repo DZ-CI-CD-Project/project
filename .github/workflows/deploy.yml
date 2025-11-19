@@ -28,8 +28,8 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.projectKey=${{ github.event.repository.name }}
-            -Dsonar.projectName=${{ github.event.repository.name }}
+            -Dsonar.projectKey=DZ-CI-CD-Project
+            -Dsonar.projectName=DZ-CI-CD-Project
             -Dsonar.sources=backend,frontend
             -Dsonar.exclusions=**/node_modules/**,**/.next/**,frontend/app/public/**,**/build/**,**/dist/**,**/coverage/**
 
