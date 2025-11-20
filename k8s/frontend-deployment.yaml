@@ -21,7 +21,7 @@ spec:
       containers:
       - name: frontend
         # Harbor 레지스트리에서 이미지 Pull
-        image: 192.168.0.240/mywork/frontend:latest
+        image: 192.168.0.240/mywork/frontend:1.2
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
