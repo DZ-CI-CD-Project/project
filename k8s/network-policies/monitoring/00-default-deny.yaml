@@ -1,0 +1,11 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: monitoring  # 실제 모니터링 네임스페이스 이름으로 변경 필요
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+

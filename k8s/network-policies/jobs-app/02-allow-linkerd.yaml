@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-linkerd
+  namespace: jobs-app
+spec:
+  podSelector: {}  # 모든 파드에 적용
+  policyTypes:
+  - Egress
+  egress:
+  # Linkerd control plane과의 통신 허용
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: linkerd
+    ports:
+    - protocol: TCP
+      port: 8086  # linkerd-dst
+    - protocol: TCP
+      port: 8080  # linkerd-identity
+    - protocol: TCP
+      port: 8090  # linkerd-policy
+    - protocol: TCP
+      port: 443   # linkerd-policy-validator
+

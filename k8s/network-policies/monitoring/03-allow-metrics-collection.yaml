@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-metrics-collection
+  namespace: monitoring  # 실제 모니터링 네임스페이스 이름으로 변경 필요
+spec:
+  podSelector:
+    matchLabels:
+      app: prometheus  # Prometheus 파드에 적용
+  policyTypes:
+  - Egress
+  egress:
+  # jobs-app 네임스페이스의 모든 파드에서 메트릭 수집 허용
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: jobs-app
+    ports:
+    # jobs-app 네임스페이스의 애플리케이션 메트릭 포트만 허용
+    - protocol: TCP
+      port: 3000  # Frontend 메트릭
+    - protocol: TCP
+      port: 8000  # Backend 메트릭
+    - protocol: TCP
+      port: 27017  # MongoDB 메트릭
+    # 참고: 9090, 8080은 jobs-app에 존재하지 않는 포트이므로 제거
+

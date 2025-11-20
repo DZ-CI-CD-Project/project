@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-backend-external
+  namespace: jobs-app
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Egress
+  egress:
+  # Backend에서 외부 API로의 통신 허용 (work24.go.kr 등)
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0  # 모든 외부 IP (필요시 특정 IP로 제한)
+    ports:
+    - protocol: TCP
+      port: 443  # HTTPS
+    - protocol: TCP
+      port: 80   # HTTP (work24.go.kr 등)
+  # DNS는 이미 01-allow-dns.yaml에서 허용됨
+

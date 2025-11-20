@@ -1,0 +1,115 @@
+# 1. 기본 차단 (화이트리스트 전략 시작)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: jobs-app  # [중요] 실제 네임스페이스로 변경
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+# 2. 필수 인프라 허용 (DNS + Linkerd 제어부)
+# 이거 없으면 Linkerd 프록시가 죽습니다.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-infra-egress
+  namespace: jobs-app
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  # DNS 허용
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: UDP
+      port: 53
+  # Linkerd Control Plane 허용 (일반적으로 'linkerd' 네임스페이스에 있음)
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: linkerd
+---
+# 3. [Ingress] 외부 -> 프론트엔드 (NodePort 접근 허용)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-public-to-frontend
+  namespace: jobs-app
+spec:
+  podSelector:
+    matchLabels:
+      app: frontend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 3000
+---
+# 4. [Ingress] 프론트엔드 -> 백엔드 (8000 포트만)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: jobs-app
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8000
+---
+# 5. [Ingress] 백엔드 -> MongoDB (27017 포트만)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-backend-to-mongodb
+  namespace: jobs-app
+spec:
+  podSelector:
+    matchLabels:
+      app: mongodb
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: backend
+    ports:
+    - protocol: TCP
+      port: 27017
+---
+# 6. [Egress] CI/CD Runner (테스트/빌드용 파드 외부 허용)
+# role=ci-runner 라벨이 붙은 파드만 외부 인터넷 허용
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ci-runner-egress
+  namespace: jobs-app
+spec:
+  podSelector:
+    matchLabels:
+      role: ci-runner
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0

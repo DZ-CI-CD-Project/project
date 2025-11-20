@@ -96,6 +96,7 @@ try {
   // 라우트 설정
   app.use('/api/auth', authRoutes);
   app.use('/api/import/work24', work24Router);
+  app.use('/work24', work24Router);  // 프론트엔드 호환성을 위한 별칭
   app.use('/api/favorites', favoritesRoutes);
   
   console.log('[routes] 라우터 로드 완료');

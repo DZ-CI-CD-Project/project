@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: jobs-app
+spec:
+  podSelector: {}  # 모든 파드에 적용
+  policyTypes:
+  - Ingress
+  - Egress
+  # 허용 규칙은 다른 NetworkPolicy에서 정의
+

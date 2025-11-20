@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-monitoring
+  namespace: jobs-app
+spec:
+  podSelector: {}  # 모든 파드에 적용
+  policyTypes:
+  - Ingress
+  ingress:
+  # 모니터링 네임스페이스에서 메트릭 수집 허용
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    - namespaceSelector:
+        matchLabels:
+          name: prometheus
+    - namespaceSelector:
+        matchLabels:
+          name: kube-prometheus
+    ports:
+    # 애플리케이션 메트릭 포트 (메트릭 수집 대상 포트)
+    - protocol: TCP
+      port: 3000  # Frontend 메트릭
+    - protocol: TCP
+      port: 8000  # Backend 메트릭
+    - protocol: TCP
+      port: 27017  # MongoDB 메트릭
+    # 참고: 9090, 8080은 Prometheus 자체 포트이므로 제거
+    #       메트릭 수집은 타겟 애플리케이션의 포트(3000, 8000, 27017)로 접근
+

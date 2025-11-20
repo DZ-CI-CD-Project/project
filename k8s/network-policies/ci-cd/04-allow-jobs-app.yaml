@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-jobs-app
+  namespace: ci-cd  # 실제 CI/CD 네임스페이스 이름으로 변경 필요
+spec:
+  podSelector:
+    matchLabels:
+      role: ci-runner
+  policyTypes:
+  - Egress
+  egress:
+  # jobs-app 네임스페이스의 Backend 서비스 테스트 허용
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: jobs-app
+      podSelector:
+        matchLabels:
+          app: backend
+    ports:
+    - protocol: TCP
+      port: 8000
+

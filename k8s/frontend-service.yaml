@@ -6,7 +6,11 @@ metadata:
   labels:
     app: frontend
 spec:
+<<<<<<< HEAD
   type: ClusterIP  # 또는 LoadBalancer, Ingress 사용 가능
+=======
+  type: ClusterIP  # 외부 접근 차단, ngrok을 통해서만 접근 가능
+>>>>>>> a89bfc8 (real-22)
   ports:
   - port: 3000
     targetPort: 3000
