@@ -6,7 +6,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  type: NodePort  # 또는 LoadBalancer, Ingress 사용 가능
+  type: ClusterIP  # 또는 LoadBalancer, Ingress 사용 가능
   ports:
   - port: 3000
     targetPort: 3000
