@@ -10,14 +10,12 @@ spec:
   policyTypes:
   - Egress
   egress:
-  # Backend에서 외부 API로의 통신 허용 (work24.go.kr 등)
+  # Backend에서 외부 API로의 통신 허용 (work24.go.kr API 엔드포인트만)
   - to:
     - ipBlock:
-        cidr: 0.0.0.0/0  # 모든 외부 IP (필요시 특정 IP로 제한)
+        cidr: 210.95.199.204/32  # www.work24.go.kr IP (고정된 API 엔드포인트)
     ports:
     - protocol: TCP
-      port: 443  # HTTPS
-    - protocol: TCP
-      port: 80   # HTTP (work24.go.kr 등)
+      port: 443  # HTTPS (work24.go.kr API)
   # DNS는 이미 01-allow-dns.yaml에서 허용됨
 
