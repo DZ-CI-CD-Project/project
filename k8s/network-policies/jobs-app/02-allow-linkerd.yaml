@@ -6,7 +6,22 @@ metadata:
 spec:
   podSelector: {}  # 모든 파드에 적용
   policyTypes:
+  - Ingress
   - Egress
+  ingress:
+  # Linkerd proxy 간 통신 허용 (같은 네임스페이스 내)
+  - from:
+    - podSelector: {}  # 같은 네임스페이스의 모든 Pod
+    ports:
+    - protocol: TCP
+      port: 4143  # Linkerd inbound proxy port
+    # 애플리케이션 포트도 허용 (Linkerd가 프록시하는 포트)
+    - protocol: TCP
+      port: 3000  # Frontend
+    - protocol: TCP
+      port: 8000  # Backend
+    - protocol: TCP
+      port: 27017 # MongoDB
   egress:
   # Linkerd control plane과의 통신 허용
   - to:
@@ -22,4 +37,17 @@ spec:
       port: 8090  # linkerd-policy
     - protocol: TCP
       port: 443   # linkerd-policy-validator
+  # Linkerd proxy 간 통신 허용 (같은 네임스페이스 내)
+  - to:
+    - podSelector: {}  # 같은 네임스페이스의 모든 Pod
+    ports:
+    - protocol: TCP
+      port: 4143  # Linkerd inbound proxy port
+    # 애플리케이션 포트도 허용 (Linkerd가 프록시하는 포트)
+    - protocol: TCP
+      port: 3000  # Frontend
+    - protocol: TCP
+      port: 8000  # Backend
+    - protocol: TCP
+      port: 27017 # MongoDB
 
